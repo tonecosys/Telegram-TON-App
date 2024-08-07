@@ -1,0 +1,35 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main  # Adjust to the branch you want to trigger builds
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push Telegram Bot image
+        run: |
+          docker build -t your-username/telegram-bot:latest ./bot
+          docker push your-username/telegram-bot:latest
+
+      - name: Build and push React Frontend image
+        run: |
+          docker build -t your-username/react-frontend:latest ./front
+          docker push your-username/react-frontend:latest
+
+      - name: Build and push FastAPI Backend image
+        run: |
+          docker build -t your-username/fastapi-backend:latest ./back
+          docker push your-username/fastapi-backend:latest
