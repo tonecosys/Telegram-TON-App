@@ -1,1 +1,45 @@
 
+version: '3.8'
+
+services:
+  bot:
+    image: your-telegram-bot-image
+    build:
+      context: ./bot
+    depends_on:
+      - back
+    environment:
+      - TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+      - API_URL=http://back:8000
+
+  front:
+    image: your-react-app-image
+    build:
+      context: ./front
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back
+
+  back:
+    image: your-fastapi-backend-image
+    build:
+      context: ./back
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/dbname
+
+  postgres:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=dbname
+
+volumes:
+  postgres_data:
