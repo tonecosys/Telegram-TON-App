@@ -1,5 +1,5 @@
 name: Build and Push Docker Images
-
+tonecosys/telegram-ton-app
 on:
   push:
     branches:
@@ -21,15 +21,15 @@ jobs:
 
       - name: Build and push Telegram Bot image
         run: |
-          docker build -t your-username/telegram-bot:latest ./bot
-          docker push your-username/telegram-bot:latest
+          docker build -t tonecosys/telegram-ton-app/telegram-bot:latest ./bot
+          docker push tonecosys/telegram-ton-app/telegram-bot:latest
 
       - name: Build and push React Frontend image
         run: |
-          docker build -t your-username/react-frontend:latest ./front
-          docker push your-username/react-frontend:latest
+          docker build -t tonecosys/telegram-ton-app/react-frontend:latest ./front
+          docker push tonecosys/telegram-ton-app/react-frontend:latest
 
       - name: Build and push FastAPI Backend image
         run: |
-          docker build -t your-username/fastapi-backend:latest ./back
-          docker push your-username/fastapi-backend:latest
+          docker build -t tonecosys/telegram-ton-app/fastapi-backend:latest ./back
+          docker push tonecosys/telegram-ton-app/fastapi-backend:latest
